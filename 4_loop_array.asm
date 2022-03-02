@@ -1,16 +1,14 @@
-n: DD 1, 2, 3, 4
+n: 	DD 	1, 2, 3, 4
 
-  addi t0, x0, 16
-  ld t1, n(t0)
-
-	addi t2, x0, 0        ;; counter
-	addi t3, x0, 32	      ;; size
+	addi t0, x0, 0 	    ;; counter
+	addi t1, x0, 32	    ;; size limit
+	ld t2, n(t0)
 LOOP:		
-	beq t2, t3, EXIT
-	ld s1, n(t2)
-	ecall x0, s1, 0
-	addi t2, t2, 8
-	bne t2, t3, LOOP			;; continue loop
-EXIT:
 	ecall x0, t2, 0
+	addi t0, t0, 8
+	beq t1, t0, EXIT
+	ld t2, n(t0)
+	bne t1, t0, LOOP			    ;; continue loop
+EXIT:
+	ecall x0, t0, 0
 	ebreak x0, x0, 0;
